@@ -4,16 +4,30 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js" integrity="sha384-Akqfrbj/HpNVo8k11SXBb6TlBWmXXlYQrCSqEWmyKJe+hDm3Z/B2WVG4smwBkRVm" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js"
+            integrity="sha384-Akqfrbj/HpNVo8k11SXBb6TlBWmXXlYQrCSqEWmyKJe+hDm3Z/B2WVG4smwBkRVm"
+            crossorigin="anonymous"></script>
     <title>Hello World</title>
 </head>
 <body>
-    <div id="count">
-        {% block count %}
-            Count {{ count }}
-        {% endblock %}
+{% block form %}
+    <form hx-swap="outerHTML" hx-target="#contacts" hx-post="/contacts">
+        name: <input type="text" name="name"/>
+        email: <input type="text" name="email"/>
+        <button type="submit">Create Contact</button>
+    </form>
+{% endblock %}
+<hr/>
+{% block display %}
+    <div id="contacts" style="display: flex; flex-direction: column">
+        {% for contact in contacts %}
+            <div>
+                <span>Name: {{ contact.name }}</span>
+                <span>Email: {{ contact.email }}</span>
+            </div>
+        {% endfor %}
     </div>
-    <button hx-target="#count" hx-post="/count">Count</button>
+{% endblock %}
 </body>
 </html>
 
